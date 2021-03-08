@@ -25,18 +25,18 @@
  * DEALINGS IN THE SOFTWARE.
  */
 interface EventOptions {
-  name: string,
-  enabled?: boolean
+    name: string;
+    enabled?: boolean;
 }
 export default class {
-  public name: string;
+    public name: string;
 
-  public enabled: boolean;
+    public enabled: boolean;
 
-  constructor(options: EventOptions) {
-    this.name = options.name || 'message';
-    this.enabled = options.enabled || true;
-  }
+    constructor(options: EventOptions) {
+        this.name = options.name || 'message';
+        this.enabled = options.enabled || true;
+    }
 
-  async run() {}
+    async run() {}
 }

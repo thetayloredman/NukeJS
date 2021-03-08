@@ -28,27 +28,27 @@ import { default as colors } from './NukeColors';
 const messagePrefix = `${colors.getGray('[')}${colors.getMagenta('NukeJS Bot Client')}${colors.getGray(']')}`;
 
 export default class {
-  MALFORMED_COMMAND(path) {
-    console.log(`${messagePrefix} ${colors.getRed(`Malformed command at ${colors.getBlue(path)}`)}`);
-  }
+    MALFORMED_COMMAND(path) {
+        console.log(`${messagePrefix} ${colors.getRed(`Malformed command at ${colors.getBlue(path)}`)}`);
+    }
 
-  LOADED_COMMAND(command) {
-    console.log(`${messagePrefix} Loaded command ${colors.getGreen(command.name)}`);
-  }
+    LOADED_COMMAND(command) {
+        console.log(`${messagePrefix} Loaded command ${colors.getGreen(command.name)}`);
+    }
 
-  REMOVED_COMMAND(command) {
-    console.log(`${messagePrefix} ${colors.getRed(`Removed Command ${colors.getBlue(command)}`)}`);
-  }
+    REMOVED_COMMAND(command) {
+        console.log(`${messagePrefix} ${colors.getRed(`Removed Command ${colors.getBlue(command)}`)}`);
+    }
 
-  LOG_COMMAND(commandName, userName, guildName) {
-    console.log(`${messagePrefix} Command ${colors.getBlue(commandName)} has been run by ${userName} in ${guildName}`);
-  }
+    LOG_COMMAND(commandName, userName, guildName) {
+        console.log(`${messagePrefix} Command ${colors.getBlue(commandName)} has been run by ${userName} in ${guildName}`);
+    }
 
-  LOADED_EVENT(eventFile) {
-    console.log(`${messagePrefix} Loaded Event ${colors.getGreen(eventFile)}`);
-  }
+    LOADED_EVENT(eventFile) {
+        console.log(`${messagePrefix} Loaded Event ${colors.getGreen(eventFile)}`);
+    }
 
-  LOADED_INHIBITOR(inhibitor) {
-    console.log(`${messagePrefix} Loaded Inhibitor ${colors.getGreen(inhibitor)}`);
-  }
+    LOADED_INHIBITOR(inhibitor) {
+        console.log(`${messagePrefix} Loaded Inhibitor ${colors.getGreen(inhibitor)}`);
+    }
 }

@@ -1,3 +1,3 @@
 # Changelog
 
-- Recoded project in Typescript
+-   Recoded project in Typescript

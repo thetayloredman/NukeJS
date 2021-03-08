@@ -1,8 +1,8 @@
 # TO-DO
 
-- language
-- checkers
-- resolvers
-- Inhibitors
-- Providers
-- Dynamic help command
+-   language
+-   checkers
+-   resolvers
+-   Inhibitors
+-   Providers
+-   Dynamic help command

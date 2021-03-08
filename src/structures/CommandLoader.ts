@@ -32,232 +32,235 @@ import NukeLogger from '../utils/NukeLogger';
 import Loader from './Loader';
 
 interface commandLoaderOptions {
-  directory: string,
-  prefix: string | ((message: Message) => string | Promise<string>),
-  db?: any,
-  name?: string,
-  allowMention?: boolean,
-  extensions?: Array<string>,
-  folderCategory?: boolean,
-  logCommands?: boolean,
-  handleEditing?: boolean,
-  blockBot?: boolean,
-  blockClient?: boolean,
-  ignoreCooldown?: Array<UserResolvable>,
-  ignorePerms?: Array<UserResolvable>,
-  ignoredInhibitors?: Array<string>
-
+    directory: string;
+    prefix: string | ((message: Message) => string | Promise<string>);
+    db?: any;
+    name?: string;
+    allowMention?: boolean;
+    extensions?: Array<string>;
+    folderCategory?: boolean;
+    logCommands?: boolean;
+    handleEditing?: boolean;
+    blockBot?: boolean;
+    blockClient?: boolean;
+    ignoreCooldown?: Array<UserResolvable>;
+    ignorePerms?: Array<UserResolvable>;
+    ignoredInhibitors?: Array<string>;
 }
 
 export default class extends Loader {
-  directory: string;
+    directory: string;
 
-  prefix: string | ((message: Message) => string | Promise<string>);
+    prefix: string | ((message: Message) => string | Promise<string>);
 
-  name: string;
+    name: string;
 
-  allowMention: boolean;
+    allowMention: boolean;
 
-  extensions: Array<string>;
+    extensions: Array<string>;
 
-  folderCategory: boolean;
+    folderCategory: boolean;
 
-  logCommands: boolean;
+    logCommands: boolean;
 
-  handleEditing: boolean;
+    handleEditing: boolean;
 
-  blockBot: boolean;
+    blockBot: boolean;
 
-  blockClient: boolean;
+    blockClient: boolean;
 
-  ignoreCooldown: Array<UserResolvable>;
+    ignoreCooldown: Array<UserResolvable>;
 
-  ignorePerms: Array<UserResolvable>;
+    ignorePerms: Array<UserResolvable>;
 
-  ignoredInhibitors: Array<string>;
+    ignoredInhibitors: Array<string>;
 
-  client: Client;
+    client: Client;
 
-  Commands: Collection<string, Command> = new Collection<string, Command>();
+    Commands: Collection<string, Command> = new Collection<string, Command>();
 
-  Logger: NukeLogger = new NukeLogger();
+    Logger: NukeLogger = new NukeLogger();
 
-  constructor(client, options: commandLoaderOptions = { directory: './commands', prefix: 'n>' }) {
-    super(client, { directory: options.directory, extensions: options.extensions });
-    if (!options.prefix) throw new Error('Property <prefix> cannot be empty in commandLoaderOptions');
+    constructor(client, options: commandLoaderOptions = { directory: './commands', prefix: 'n>' }) {
+        super(client, { directory: options.directory, extensions: options.extensions });
+        if (!options.prefix) throw new Error('Property <prefix> cannot be empty in commandLoaderOptions');
 
-    this.directory = `${process.cwd()}/${options.directory}`;
-    this.prefix = options.prefix;
-    this.client = client;
+        this.directory = `${process.cwd()}/${options.directory}`;
+        this.prefix = options.prefix;
+        this.client = client;
 
-    this.name = options.name || '';
-    this.allowMention = options.allowMention || true;
-    this.extensions = options.extensions || ['.js', '.ts'];
+        this.name = options.name || '';
+        this.allowMention = options.allowMention || true;
+        this.extensions = options.extensions || ['.js', '.ts'];
 
-    this.folderCategory = options.folderCategory || true;
-    this.logCommands = options.logCommands || false;
-    this.handleEditing = options.handleEditing || false;
-    this.blockBot = options.blockBot || true;
-    this.blockClient = options.blockClient || true;
-    this.ignoreCooldown = options.ignoreCooldown || [client.owner];
-    this.ignorePerms = options.ignorePerms || [];
-    this.ignoredInhibitors = options.ignoredInhibitors || [];
+        this.folderCategory = options.folderCategory || true;
+        this.logCommands = options.logCommands || false;
+        this.handleEditing = options.handleEditing || false;
+        this.blockBot = options.blockBot || true;
+        this.blockClient = options.blockClient || true;
+        this.ignoreCooldown = options.ignoreCooldown || [client.owner];
+        this.ignorePerms = options.ignorePerms || [];
+        this.ignoredInhibitors = options.ignoredInhibitors || [];
 
-    this.init();
-  }
+        this.init();
+    }
 
-  init() {
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    if(typeof this.prefix == "function") console.log(colors.getGray(`#         Loading commands with Guild Specific Prefix          `));
-     else console.log(colors.getGray(`#         Loading commands with prefix: ${this.prefix}           `));
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    this.fetchAll();
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
+    init() {
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        if (typeof this.prefix == 'function') console.log(colors.getGray(`#         Loading commands with Guild Specific Prefix          `));
+        else console.log(colors.getGray(`#         Loading commands with prefix: ${this.prefix}           `));
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        this.fetchAll();
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
 
-    this.client.on('ready', () => {
-      this.client.on('message', async (message) => {
-        if (message.partial) await message.fetch();
-        this.handle(message);
-      });
-      if (this.handleEditing) {
-        this.client.on('messageUpdate', async (o, n) => {
-          if (o.partial) await o.fetch();
-          if (n.partial) await n.fetch();
-          if (o.content === n.content) return;
-          this.handle(n);
+        this.client.on('ready', () => {
+            this.client.on('message', async (message) => {
+                if (message.partial) await message.fetch();
+                this.handle(message);
+            });
+            if (this.handleEditing) {
+                this.client.on('messageUpdate', async (o, n) => {
+                    if (o.partial) await o.fetch();
+                    if (n.partial) await n.fetch();
+                    if (o.content === n.content) return;
+                    this.handle(n);
+                });
+            }
         });
-      }
-    });
-  }
-
-  register(file: string, path: string, category?: string) {
-    try {
-      const command: Command = new (require(path))(file);
-      if (this.folderCategory && category !== undefined) command.category = category;
-      if (!command.enabled) return;
-      this.Commands.set(command.name, command);
-      this.Logger.LOADED_COMMAND(command);
-      this.emit('loaded', { path: command.file });
-    } catch (err) {
-      if (err instanceof TypeError) {
-        this.Logger.MALFORMED_COMMAND(path);
-        this.emit('malformed', { path });
-      } else {
-        console.error(err);
-      }
     }
-  }
 
-  remove(command: string) {
-    if (this.Commands.has(command)) {
-      this.Commands.delete(command);
-    } else {
-      throw new Error(`Command ${command} was never registered!`);
+    register(file: string, path: string, category?: string) {
+        try {
+            const command: Command = new (require(path))(file);
+            if (this.folderCategory && category !== undefined) command.category = category;
+            if (!command.enabled) return;
+            this.Commands.set(command.name, command);
+            this.Logger.LOADED_COMMAND(command);
+            this.emit('loaded', { path: command.file });
+        } catch (err) {
+            if (err instanceof TypeError) {
+                this.Logger.MALFORMED_COMMAND(path);
+                this.emit('malformed', { path });
+            } else {
+                console.error(err);
+            }
+        }
     }
-  }
 
-  reload() {
-    this.Commands.clear()
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    if(typeof this.prefix == "function") console.log(colors.getGray(`#         Reloading commands with Guild Specific Prefix          `));
-     else console.log(colors.getGray(`#         ´Reloading commands with prefix: ${this.prefix}           `));
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    this.fetchAll();
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
-  }
-
-  async checkInihibitors(message, cmd) {
-    // eslint-disable-next-line no-unused-vars
-    return new Promise((resolve, reject) => {
-      this.client.InhibitorStore.forEach(async (inhibitor) => {
-        if (!this.ignoredInhibitors.includes(inhibitor.name)) {
-          if ((await inhibitor.run(message, cmd, this.name)) === false) {
-            resolve(true);
-          }
+    remove(command: string) {
+        if (this.Commands.has(command)) {
+            this.Commands.delete(command);
         } else {
-          resolve(false);
+            throw new Error(`Command ${command} was never registered!`);
         }
-      });
-      resolve(false);
-    });
-  }
-
-  async handle(message) {
-    let args;
-    let temp_prefix = this.prefix;
-    if (typeof temp_prefix === "function") temp_prefix = await temp_prefix(message);
-    if (message.content.startsWith(temp_prefix)) {
-      args = message.content.substring(temp_prefix.length).split(/ +/);
-    } else if (this.allowMention && message.content.startsWith(`<@${this.client.user.id}>`)) {
-      args = message.content.substring(`<@${this.client.user.id}>`.length).split(/ +/);
-    } else if (this.allowMention && message.content.startsWith(`<@!${this.client.user.id}>`)) {
-      args = message.content.substring(`<@!${this.client.user.id}>`.length).split(/ +/);
-    } else return;
-
-    if (args[0] === '' || args[0] === '') args.shift();
-
-    if (args.join('') === '' || args.join('') === ' ' || args.join('') === undefined) return;
-    if (this.blockBot && message.author.bot) return;
-    if (this.blockClient && message.author.id === this.client.user.id) return;
-
-    const command = args.shift().toLowerCase();
-    const cmd = this.Commands.get(command) || this.Commands.find((tempCmd) => tempCmd.aliases.includes(command));
-
-    if (!cmd) return;
-
-    // Inhibitor Check
-    // eslint-disable-next-line no-restricted-syntax
-    for (const inhibitorKey of this.client.InhibitorStore.keyArray()) {
-      if (!this.ignoredInhibitors.includes(inhibitorKey)) {
-        if (await this.client.InhibitorStore.get(inhibitorKey).run(message, cmd, this.name) === false) return;
-      }
     }
 
-    if ((cmd.restricted === "owner" && message.author.id !== this.client.owner) || (cmd.restricted === "dev" && !this.client.devIds.includes(message.author.id))) return;
-    if (!cmd.runIn.includes(message.channel.type)) return;
-    if (cmd.cooldown > 0 && cmd.onCooldown.includes(message.author.id)) {
-      message.reply(`You need to wait ${cmd.cooldown / 1000} seconds before using this command again!`);
-      return;     
+    reload() {
+        this.Commands.clear();
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        if (typeof this.prefix == 'function') console.log(colors.getGray(`#         Reloading commands with Guild Specific Prefix          `));
+        else console.log(colors.getGray(`#         ´Reloading commands with prefix: ${this.prefix}           `));
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        this.fetchAll();
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
     }
 
-    try {
-      if (message.channel.type !== 'dm') {
-        if (cmd.botPerms.length !== 0) {
-          if (!message.guild.member(message.client.user).hasPermission(cmd.botPerms)) {
-            message.reply(`Please make sure I have following perms! ${cmd.botPerms.join(', ')}`);
+    async checkInihibitors(message, cmd) {
+        // eslint-disable-next-line no-unused-vars
+        return new Promise((resolve, reject) => {
+            this.client.InhibitorStore.forEach(async (inhibitor) => {
+                if (!this.ignoredInhibitors.includes(inhibitor.name)) {
+                    if ((await inhibitor.run(message, cmd, this.name)) === false) {
+                        resolve(true);
+                    }
+                } else {
+                    resolve(false);
+                }
+            });
+            resolve(false);
+        });
+    }
+
+    async handle(message) {
+        let args;
+        let temp_prefix = this.prefix;
+        if (typeof temp_prefix === 'function') temp_prefix = await temp_prefix(message);
+        if (message.content.startsWith(temp_prefix)) {
+            args = message.content.substring(temp_prefix.length).split(/ +/);
+        } else if (this.allowMention && message.content.startsWith(`<@${this.client.user.id}>`)) {
+            args = message.content.substring(`<@${this.client.user.id}>`.length).split(/ +/);
+        } else if (this.allowMention && message.content.startsWith(`<@!${this.client.user.id}>`)) {
+            args = message.content.substring(`<@!${this.client.user.id}>`.length).split(/ +/);
+        } else return;
+
+        if (args[0] === '' || args[0] === '') args.shift();
+
+        if (args.join('') === '' || args.join('') === ' ' || args.join('') === undefined) return;
+        if (this.blockBot && message.author.bot) return;
+        if (this.blockClient && message.author.id === this.client.user.id) return;
+
+        const command = args.shift().toLowerCase();
+        const cmd = this.Commands.get(command) || this.Commands.find((tempCmd) => tempCmd.aliases.includes(command));
+
+        if (!cmd) return;
+
+        // Inhibitor Check
+        // eslint-disable-next-line no-restricted-syntax
+        for (const inhibitorKey of this.client.InhibitorStore.keyArray()) {
+            if (!this.ignoredInhibitors.includes(inhibitorKey)) {
+                if ((await this.client.InhibitorStore.get(inhibitorKey).run(message, cmd, this.name)) === false) return;
+            }
+        }
+
+        if (
+            (cmd.restricted === 'owner' && message.author.id !== this.client.owner) ||
+            (cmd.restricted === 'dev' && !this.client.devIds.includes(message.author.id))
+        )
             return;
-          }
-        }
-        if (cmd.userPerms.length !== 0 && !this.ignorePerms.includes(message.author.id)) {
-          if (!message.member.hasPermission(cmd.userPerms)) {
-            message.reply(`You need following perms to use this command! ${cmd.userPerms.join(', ')}`);
+        if (!cmd.runIn.includes(message.channel.type)) return;
+        if (cmd.cooldown > 0 && cmd.onCooldown.includes(message.author.id)) {
+            message.reply(`You need to wait ${cmd.cooldown / 1000} seconds before using this command again!`);
             return;
-          }
         }
-      }
 
-      await cmd.run(message, args, message.client);
-      this.emit('executed', { command: cmd.name });
-      if (this.logCommands) this.Logger.LOG_COMMAND(cmd.name, message.user.username, message.guild.name);
-      if (cmd.cooldown > 0) {
-        cmd.onCooldown.push(message.author.id);
-        setTimeout(() => {
-          const index = cmd.onCooldown.indexOf(message.author.id);
-          if (index > -1) {
-            cmd.onCooldown.splice(index, 1);
-          }
-        }, cmd.cooldown);
-      }
-    } catch (error) {
-      console.error(error);
-      const errorEmbed = new MessageEmbed()
-        .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-        .setTitle('An Error has occurred!')
-        .setDescription(`Command failed to with error:\n\n${error.message}`)
-        .setColor('#ee110f');
-      message.channel.send(errorEmbed);
+        try {
+            if (message.channel.type !== 'dm') {
+                if (cmd.botPerms.length !== 0) {
+                    if (!message.guild.member(message.client.user).hasPermission(cmd.botPerms)) {
+                        message.reply(`Please make sure I have following perms! ${cmd.botPerms.join(', ')}`);
+                        return;
+                    }
+                }
+                if (cmd.userPerms.length !== 0 && !this.ignorePerms.includes(message.author.id)) {
+                    if (!message.member.hasPermission(cmd.userPerms)) {
+                        message.reply(`You need following perms to use this command! ${cmd.userPerms.join(', ')}`);
+                        return;
+                    }
+                }
+            }
 
-      this.emit('cmd_error', { command: cmd.name, error });
+            await cmd.run(message, args, message.client);
+            this.emit('executed', { command: cmd.name });
+            if (this.logCommands) this.Logger.LOG_COMMAND(cmd.name, message.user.username, message.guild.name);
+            if (cmd.cooldown > 0) {
+                cmd.onCooldown.push(message.author.id);
+                setTimeout(() => {
+                    const index = cmd.onCooldown.indexOf(message.author.id);
+                    if (index > -1) {
+                        cmd.onCooldown.splice(index, 1);
+                    }
+                }, cmd.cooldown);
+            }
+        } catch (error) {
+            console.error(error);
+            const errorEmbed = new MessageEmbed()
+                .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+                .setTitle('An Error has occurred!')
+                .setDescription(`Command failed to with error:\n\n${error.message}`)
+                .setColor('#ee110f');
+            message.channel.send(errorEmbed);
+
+            this.emit('cmd_error', { command: cmd.name, error });
+        }
     }
-  }
 }

@@ -4,4 +4,4 @@ module.exports = {
     quoteProps: 'consistent',
     trailingComma: 'none',
     printWidth: 150
-}
+};

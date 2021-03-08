@@ -32,38 +32,38 @@ import Loader from './Loader';
 import NukeLogger from '../utils/NukeLogger';
 
 interface InhibitorLoaderOptions {
-  directory: string,
-  extensions: Array<string>
+    directory: string;
+    extensions: Array<string>;
 }
 
 export default class extends Loader {
-  client: Client;
+    client: Client;
 
-  Logger: NukeLogger = new NukeLogger();
+    Logger: NukeLogger = new NukeLogger();
 
-  constructor(client, options: InhibitorLoaderOptions) {
-    super(client, options);
+    constructor(client, options: InhibitorLoaderOptions) {
+        super(client, options);
 
-    this.init();
-  }
-
-  init() {
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    console.log(colors.getGray('#                          Inhibitor                             #'));
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    this.fetchAll();
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  register(file: string, path: string, category?: string) {
-    try {
-      const inhibitor: Inhibitor = new (require(path))(file);
-      if (!inhibitor.enabled) return;
-      this.client.InhibitorStore.set(inhibitor.name, inhibitor);
-      this.Logger.LOADED_INHIBITOR(path.substring(process.cwd().length + 1));
-    } catch (error) {
-      console.error(error);
+        this.init();
     }
-  }
+
+    init() {
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        console.log(colors.getGray('#                          Inhibitor                             #'));
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        this.fetchAll();
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    register(file: string, path: string, category?: string) {
+        try {
+            const inhibitor: Inhibitor = new (require(path))(file);
+            if (!inhibitor.enabled) return;
+            this.client.InhibitorStore.set(inhibitor.name, inhibitor);
+            this.Logger.LOADED_INHIBITOR(path.substring(process.cwd().length + 1));
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

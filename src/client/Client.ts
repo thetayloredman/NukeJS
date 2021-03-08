@@ -30,58 +30,58 @@ import Inhibitor from '../types/Inhibitor';
 const messagePrefix = `${colors.getGray('[')}${colors.getMagenta('NukeJS Bot Client')}${colors.getGray(']')}`;
 
 interface NukeClientOptions {
-  discordOptions?: discord.ClientOptions,
-  eventsFolder?: string,
-  langsFolder?: string,
-  readyMessage?: string,
-  errorLog?: string,
-  owner?: string,
-  devIds?: Array<string>
+    discordOptions?: discord.ClientOptions;
+    eventsFolder?: string;
+    langsFolder?: string;
+    readyMessage?: string;
+    errorLog?: string;
+    owner?: string;
+    devIds?: Array<string>;
 }
 
 export default class extends discord.Client {
-  public commandsFolder: string;
+    public commandsFolder: string;
 
-  public prefix: string;
+    public prefix: string;
 
-  public eventsFolder: string;
+    public eventsFolder: string;
 
-  public readyMessage: string;
+    public readyMessage: string;
 
-  public owner: string;
+    public owner: string;
 
-  public devIds: string[];
+    public devIds: string[];
 
-  public InhibitorStore: discord.Collection<string, Inhibitor> = new discord.Collection<string, Inhibitor>();
+    public InhibitorStore: discord.Collection<string, Inhibitor> = new discord.Collection<string, Inhibitor>();
 
-  public commands: discord.Collection<string, object> = new discord.Collection();
+    public commands: discord.Collection<string, object> = new discord.Collection();
 
-  public events: discord.Collection<string, object> = new discord.Collection();;
+    public events: discord.Collection<string, object> = new discord.Collection();
 
-  constructor(options: NukeClientOptions) {
-    super(options.discordOptions);
+    constructor(options: NukeClientOptions) {
+        super(options.discordOptions);
 
-    this.eventsFolder = options.eventsFolder || './events';
-    this.readyMessage = options.readyMessage || 'I have been started with the name {username}';
-    this.owner = options.owner || '';
-    this.devIds = options.devIds || [];
-    if (!this.devIds.includes(this.owner) && this.owner !== '') this.devIds.push(this.owner);
+        this.eventsFolder = options.eventsFolder || './events';
+        this.readyMessage = options.readyMessage || 'I have been started with the name {username}';
+        this.owner = options.owner || '';
+        this.devIds = options.devIds || [];
+        if (!this.devIds.includes(this.owner) && this.owner !== '') this.devIds.push(this.owner);
 
-    this.on('ready', () => {
-      let msg = `${messagePrefix} ${this.readyMessage}`;
-      msg = msg.split('{username}').join(colors.getGreen(this.user.username));
-      msg = msg.split('{usertag}').join(colors.getGreen(this.user.tag));
-      msg = msg.split('{userid}').join(colors.getGreen(this.user.id));
-      msg = msg.split('{guildcount}').join(colors.getGreen(this.guilds.cache.size));
+        this.on('ready', () => {
+            let msg = `${messagePrefix} ${this.readyMessage}`;
+            msg = msg.split('{username}').join(colors.getGreen(this.user.username));
+            msg = msg.split('{usertag}').join(colors.getGreen(this.user.tag));
+            msg = msg.split('{userid}').join(colors.getGreen(this.user.id));
+            msg = msg.split('{guildcount}').join(colors.getGreen(this.guilds.cache.size));
 
-      if (msg.includes('{guilds}')) {
-        const guilds = [];
-        this.guilds.cache.each((guild) => {
-          guilds.push(guild.name);
+            if (msg.includes('{guilds}')) {
+                const guilds = [];
+                this.guilds.cache.each((guild) => {
+                    guilds.push(guild.name);
+                });
+                msg = msg.split('{guilds}').join(colors.getGreen(guilds.join(colors.getRed(','))));
+            }
+            console.log(msg);
         });
-        msg = msg.split('{guilds}').join(colors.getGreen(guilds.join(colors.getRed(','))));
-      }
-      console.log(msg);
-    });
-  }
+    }
 }

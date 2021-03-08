@@ -31,32 +31,32 @@ import NukeLogger from '../utils/NukeLogger';
 import Loader from './Loader';
 
 interface EventLoaderOptions {
-  directory: string,
-  extensions?: Array<string>
+    directory: string;
+    extensions?: Array<string>;
 }
 export default class extends Loader {
-  Logger: NukeLogger = new NukeLogger();
+    Logger: NukeLogger = new NukeLogger();
 
-  constructor(client, options: EventLoaderOptions = { directory: './events' }) {
-    super(client, options);
+    constructor(client, options: EventLoaderOptions = { directory: './events' }) {
+        super(client, options);
 
-    this.init();
-  }
+        this.init();
+    }
 
-  init() {
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    console.log(colors.getGray('#                           Events                               '));
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
-    this.fetchAll();
-    console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
-  }
+    init() {
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        console.log(colors.getGray('#                           Events                               '));
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'));
+        this.fetchAll();
+        console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
+    }
 
-  register(file: string, path: string) {
-    const event: Event = new (require(path))(file);
-    if (!event.enabled) return;
-    this.client.on(event.name, event.run);
-    this.Logger.LOADED_EVENT(path.substring(process.cwd().length + 1));
-  }
+    register(file: string, path: string) {
+        const event: Event = new (require(path))(file);
+        if (!event.enabled) return;
+        this.client.on(event.name, event.run);
+        this.Logger.LOADED_EVENT(path.substring(process.cwd().length + 1));
+    }
 
-  remove(event: string) {}
+    remove(event: string) {}
 }

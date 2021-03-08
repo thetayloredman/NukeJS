@@ -29,20 +29,20 @@ import Command from './Command';
  * DEALINGS IN THE SOFTWARE.
  */
 interface InhibitorOptions {
-  name: string,
-  enabled?: boolean
+    name: string;
+    enabled?: boolean;
 }
 export default class {
-  public name: string;
+    public name: string;
 
-  public enabled: boolean;
+    public enabled: boolean;
 
-  constructor(options: InhibitorOptions) {
-    if (!options.name) throw new Error('You need to declare a name for your Inhibitor!');
-    this.enabled = options.enabled || true;
+    constructor(options: InhibitorOptions) {
+        if (!options.name) throw new Error('You need to declare a name for your Inhibitor!');
+        this.enabled = options.enabled || true;
 
-    this.name = options.name;
-  }
+        this.name = options.name;
+    }
 
-  async run(message: string, command: Command, loaderName: string): Promise<any> {}
+    async run(message: string, command: Command, loaderName: string): Promise<any> {}
 }

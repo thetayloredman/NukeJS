@@ -26,167 +26,173 @@
  */
 
 declare module 'nukejs' {
-  import {
-    Collection, ClientOptions, Client as DiscordClient, UserResolvable, PermissionResolvable, PermissionString, BitFieldResolvable, Message,
-  } from 'discord.js';
+    import {
+        Collection,
+        ClientOptions,
+        Client as DiscordClient,
+        UserResolvable,
+        PermissionResolvable,
+        PermissionString,
+        BitFieldResolvable,
+        Message
+    } from 'discord.js';
 
-  interface NukeClientOptions {
-    discordOptions?: ClientOptions,
-    eventsFolder?: string,
-    readyMessage?: string,
-    owner?: string,
-    devIds?: Array<string>
-  }
+    interface NukeClientOptions {
+        discordOptions?: ClientOptions;
+        eventsFolder?: string;
+        readyMessage?: string;
+        owner?: string;
+        devIds?: Array<string>;
+    }
 
-  interface CommandOptions {
-    enabled?: boolean,
-    runIn?: ('text' | 'dm')[],
-    cooldown?: number,
-    aliases?: Array<string>,
-    botPerms?: Array<PermissionResolvable>,
-    userPerms?: Array<PermissionResolvable>,
-    name: string,
-    description?: string,
-    extendedHelp?: string,
-    usage?: string,
-    ignoredInhibitors?: Array<string>,
-    category?: string
-    restricted?: "admin" | "dev";
-  }
-  interface commandLoaderOptions {
-    directory: string,
-    prefix: string | ((message: Message) => string | Promise<string>),
-    allowMention?: boolean,
-    extensions?: Array<string>,
-    folderCategory?: boolean,
-    logCommands?: boolean,
-    handleEditing?: boolean,
-    blockBot?: boolean,
-    blockClient?: boolean,
-    ignoreCooldown?: Array<UserResolvable>,
-    ignorePerms?: Array<UserResolvable>,
-    ignoredInhibitors?: Array<string>,
-    errorOutput?: boolean;
-  }
+    interface CommandOptions {
+        enabled?: boolean;
+        runIn?: ('text' | 'dm')[];
+        cooldown?: number;
+        aliases?: Array<string>;
+        botPerms?: Array<PermissionResolvable>;
+        userPerms?: Array<PermissionResolvable>;
+        name: string;
+        description?: string;
+        extendedHelp?: string;
+        usage?: string;
+        ignoredInhibitors?: Array<string>;
+        category?: string;
+        restricted?: 'admin' | 'dev';
+    }
+    interface commandLoaderOptions {
+        directory: string;
+        prefix: string | ((message: Message) => string | Promise<string>);
+        allowMention?: boolean;
+        extensions?: Array<string>;
+        folderCategory?: boolean;
+        logCommands?: boolean;
+        handleEditing?: boolean;
+        blockBot?: boolean;
+        blockClient?: boolean;
+        ignoreCooldown?: Array<UserResolvable>;
+        ignorePerms?: Array<UserResolvable>;
+        ignoredInhibitors?: Array<string>;
+        errorOutput?: boolean;
+    }
 
-  interface InhibitorOptions {
-    name: string,
-    enabled?: boolean
-  }
+    interface InhibitorOptions {
+        name: string;
+        enabled?: boolean;
+    }
 
-  interface EventLoaderOptions {
-    directory: string,
-    extensions?: Array<string>
-  }
-  interface EventOptions {
-    name: string,
-    enabled?: boolean
-  }
+    interface EventLoaderOptions {
+        directory: string;
+        extensions?: Array<string>;
+    }
+    interface EventOptions {
+        name: string;
+        enabled?: boolean;
+    }
 
-  export class Client extends DiscordClient {
-    constructor(options?: NukeClientOptions)
-  }
+    export class Client extends DiscordClient {
+        constructor(options?: NukeClientOptions);
+    }
 
-  export class Command {
-    enabled: boolean;
+    export class Command {
+        enabled: boolean;
 
-    runIn: string[];
+        runIn: string[];
 
-    cooldown: number;
+        cooldown: number;
 
-    onCooldown: string[];
+        onCooldown: string[];
 
-    aliases: string[];
+        aliases: string[];
 
-    botPerms: Array<BitFieldResolvable<PermissionString>>;
+        botPerms: Array<BitFieldResolvable<PermissionString>>;
 
-    userPerms: Array<BitFieldResolvable<PermissionString>>;
+        userPerms: Array<BitFieldResolvable<PermissionString>>;
 
-    name: string;
+        name: string;
 
-    description: string;
+        description: string;
 
-    extendedHelp: string;
+        extendedHelp: string;
 
-    usage: string;
+        usage: string;
 
-    category: string;
+        category: string;
 
-    restricted: string;
+        restricted: string;
 
-    file: string;
+        file: string;
 
-    constructor(file?: string, options?: CommandOptions)
+        constructor(file?: string, options?: CommandOptions);
 
-    run(message, args, client);
-  }
+        run(message, args, client);
+    }
 
-  export class Event {
-    name: string;
+    export class Event {
+        name: string;
 
-    enabled: boolean;
+        enabled: boolean;
 
-    constructor(options: EventOptions)
-  }
+        constructor(options: EventOptions);
+    }
 
-  export class Inhibitor {
-    name: string;
+    export class Inhibitor {
+        name: string;
 
-    enabled: boolean;
+        enabled: boolean;
 
-    constructor(options: InhibitorOptions)
+        constructor(options: InhibitorOptions);
 
-    run(message: string, command: Command, loaderName: string);
-  }
+        run(message: string, command: Command, loaderName: string);
+    }
 
-  export class CommandLoader {
-    directory: string;
+    export class CommandLoader {
+        directory: string;
 
-    prefix: string;
+        prefix: string;
 
-    name: string;
+        name: string;
 
-    allowMention: boolean;
+        allowMention: boolean;
 
-    extensions: Array<string>;
+        extensions: Array<string>;
 
-    folderCategory: boolean;
+        folderCategory: boolean;
 
-    logCommands: boolean;
+        logCommands: boolean;
 
-    handleEditing: boolean;
+        handleEditing: boolean;
 
-    blockBot: boolean;
+        blockBot: boolean;
 
-    blockClient: boolean;
+        blockClient: boolean;
 
-    ignoreCooldown: Array<UserResolvable>;
+        ignoreCooldown: Array<UserResolvable>;
 
-    ignorePerms: Array<UserResolvable>;
+        ignorePerms: Array<UserResolvable>;
 
-    ignoredInhibitors: Array<string>;
+        ignoredInhibitors: Array<string>;
 
-    client: Client;
+        client: Client;
 
-    Commands: Collection<string, Command>;
+        Commands: Collection<string, Command>;
 
-    errorOutput: boolean;
+        errorOutput: boolean;
 
-    constructor(client: Client, options: commandLoaderOptions)
+        constructor(client: Client, options: commandLoaderOptions);
 
-    /**
-     * Reload all Commands
-     */
-    reload(): void;
+        /**
+         * Reload all Commands
+         */
+        reload(): void;
 
-    /**
-     * Remove a specific command from the loader
-     * @param command string
-     */
-    remove(command: string): void;
-  }
-  export class EventLoader {
-    constructor(client: Client, options: EventLoaderOptions)
-  }
-
+        /**
+         * Remove a specific command from the loader
+         * @param command string
+         */
+        remove(command: string): void;
+    }
+    export class EventLoader {
+        constructor(client: Client, options: EventLoaderOptions);
+    }
 }
