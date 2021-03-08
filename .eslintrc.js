@@ -10,12 +10,9 @@ module.exports = {
     },
     plugins: ['@typescript-eslint'],
     rules: {
-        'import/extensions': 'off',
-        'import/no-unresolved': 'off',
         'no-console': 'off',
         'max-len': 'off',
         'no-await-in-loop': 'off',
-        'class-methods-use-this': 'off',
-        'import/no-named-default': 'off'
+        'class-methods-use-this': 'off'
     }
 };
