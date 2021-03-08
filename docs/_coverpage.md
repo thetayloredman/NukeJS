@@ -4,7 +4,7 @@
 
 > An advanced, simple and easy Discord Bot Framework
 
--   Costumizable Command Handlers
+-   Customizable Command Handlers
 -   Commands with many different features, such as cooldowns, perm checks aliases categories.
 
 [GitHub](https://github.com/LostNuke/NukeJS)
