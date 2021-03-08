@@ -17,6 +17,6 @@ module.exports = {
         'max-len': 'off',
         'no-await-in-loop': 'off',
         'class-methods-use-this': 'off',
-        'import/no-named-default': off
+        'import/no-named-default': 'off'
     }
 };
