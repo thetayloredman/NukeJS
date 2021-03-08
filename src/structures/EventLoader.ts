@@ -23,7 +23,6 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-/* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import { default as colors } from '../utils/NukeColors';
 import Event from '../types/Event';
