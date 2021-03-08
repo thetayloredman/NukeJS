@@ -1,0 +1,12 @@
+# tsconfig
+/tsconfig.json
+
+# built stuff
+/dist/
+
+# configs
+/.gitignore
+/.prettierignore
+
+# package-lock
+/package-lock.json
