@@ -33,7 +33,7 @@ import NukeLogger from '../utils/NukeLogger';
 
 interface InhibitorLoaderOptions {
     directory: string;
-    extensions: Array<string>;
+    extensions: string[];
 }
 
 export default class extends Loader {

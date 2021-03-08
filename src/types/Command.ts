@@ -30,11 +30,11 @@ import { BitFieldResolvable, PermissionString } from 'discord.js';
 
 interface CommandOptions {
     enabled?: boolean;
-    runIn?: Array<string>;
+    runIn?: string[];
     cooldown?: number;
-    aliases?: Array<string>;
-    botPerms?: Array<BitFieldResolvable<PermissionString>>;
-    userPerms?: Array<BitFieldResolvable<PermissionString>>;
+    aliases?: string[];
+    botPerms?: BitFieldResolvable<PermissionString>[];
+    userPerms?: BitFieldResolvable<PermissionString>[];
     name: string;
     description?: string;
     extendedHelp?: string;
@@ -53,9 +53,9 @@ export default class {
 
     public aliases: string[];
 
-    public botPerms: Array<BitFieldResolvable<PermissionString>>;
+    public botPerms: BitFieldResolvable<PermissionString>[];
 
-    public userPerms: Array<BitFieldResolvable<PermissionString>>;
+    public userPerms: BitFieldResolvable<PermissionString>[];
 
     public name: string;
 
@@ -103,7 +103,7 @@ export default class {
 
     /**
      * @param {Message} msg The message that led to triggering this command
-     * @param {Array<string>} args The args of the command
+     * @param {string[]} args The args of the command
      * @param {client} client The client of the Bot
      */
     async run(message, args, client) {}

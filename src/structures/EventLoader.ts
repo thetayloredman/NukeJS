@@ -32,7 +32,7 @@ import Loader from './Loader';
 
 interface EventLoaderOptions {
     directory: string;
-    extensions?: Array<string>;
+    extensions?: string[];
 }
 export default class extends Loader {
     Logger: NukeLogger = new NukeLogger();

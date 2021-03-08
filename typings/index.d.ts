@@ -42,21 +42,21 @@ declare module 'nukejs' {
         eventsFolder?: string;
         readyMessage?: string;
         owner?: string;
-        devIds?: Array<string>;
+        devIds?: string[];
     }
 
     interface CommandOptions {
         enabled?: boolean;
         runIn?: ('text' | 'dm')[];
         cooldown?: number;
-        aliases?: Array<string>;
-        botPerms?: Array<PermissionResolvable>;
-        userPerms?: Array<PermissionResolvable>;
+        aliases?: string[];
+        botPerms?: PermissionResolvable[];
+        userPerms?: PermissionResolvable[];
         name: string;
         description?: string;
         extendedHelp?: string;
         usage?: string;
-        ignoredInhibitors?: Array<string>;
+        ignoredInhibitors?: string[];
         category?: string;
         restricted?: 'admin' | 'dev';
     }
@@ -64,15 +64,15 @@ declare module 'nukejs' {
         directory: string;
         prefix: string | ((message: Message) => string | Promise<string>);
         allowMention?: boolean;
-        extensions?: Array<string>;
+        extensions?: string[];
         folderCategory?: boolean;
         logCommands?: boolean;
         handleEditing?: boolean;
         blockBot?: boolean;
         blockClient?: boolean;
-        ignoreCooldown?: Array<UserResolvable>;
-        ignorePerms?: Array<UserResolvable>;
-        ignoredInhibitors?: Array<string>;
+        ignoreCooldown?: UserResolvable[];
+        ignorePerms?: UserResolvable[];
+        ignoredInhibitors?: string[];
         errorOutput?: boolean;
     }
 
@@ -83,7 +83,7 @@ declare module 'nukejs' {
 
     interface EventLoaderOptions {
         directory: string;
-        extensions?: Array<string>;
+        extensions?: string[];
     }
     interface EventOptions {
         name: string;
@@ -105,9 +105,9 @@ declare module 'nukejs' {
 
         aliases: string[];
 
-        botPerms: Array<BitFieldResolvable<PermissionString>>;
+        botPerms: BitFieldResolvable<PermissionString>[];
 
-        userPerms: Array<BitFieldResolvable<PermissionString>>;
+        userPerms: BitFieldResolvable<PermissionString>[];
 
         name: string;
 
@@ -155,7 +155,7 @@ declare module 'nukejs' {
 
         allowMention: boolean;
 
-        extensions: Array<string>;
+        extensions: string[];
 
         folderCategory: boolean;
 
@@ -167,11 +167,11 @@ declare module 'nukejs' {
 
         blockClient: boolean;
 
-        ignoreCooldown: Array<UserResolvable>;
+        ignoreCooldown: UserResolvable[];
 
-        ignorePerms: Array<UserResolvable>;
+        ignorePerms: UserResolvable[];
 
-        ignoredInhibitors: Array<string>;
+        ignoredInhibitors: string[];
 
         client: Client;
 

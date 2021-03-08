@@ -37,15 +37,15 @@ interface commandLoaderOptions {
     db?: any;
     name?: string;
     allowMention?: boolean;
-    extensions?: Array<string>;
+    extensions?: string[];
     folderCategory?: boolean;
     logCommands?: boolean;
     handleEditing?: boolean;
     blockBot?: boolean;
     blockClient?: boolean;
-    ignoreCooldown?: Array<UserResolvable>;
-    ignorePerms?: Array<UserResolvable>;
-    ignoredInhibitors?: Array<string>;
+    ignoreCooldown?: UserResolvable[];
+    ignorePerms?: UserResolvable[];
+    ignoredInhibitors?: string[];
 }
 
 export default class extends Loader {
@@ -57,7 +57,7 @@ export default class extends Loader {
 
     allowMention: boolean;
 
-    extensions: Array<string>;
+    extensions: string[];
 
     folderCategory: boolean;
 
@@ -69,11 +69,11 @@ export default class extends Loader {
 
     blockClient: boolean;
 
-    ignoreCooldown: Array<UserResolvable>;
+    ignoreCooldown: UserResolvable[];
 
-    ignorePerms: Array<UserResolvable>;
+    ignorePerms: UserResolvable[];
 
-    ignoredInhibitors: Array<string>;
+    ignoredInhibitors: string[];
 
     client: Client;
 

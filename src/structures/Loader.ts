@@ -29,12 +29,12 @@ import { Client } from '../index';
 
 interface LoaderOptions {
     directory: string;
-    extensions?: Array<string>;
+    extensions?: string[];
 }
 export default class extends EventEmitter {
     directory: string;
 
-    extensions: Array<string>;
+    extensions: string[];
 
     client: Client;
 
@@ -72,7 +72,7 @@ export default class extends EventEmitter {
 
     remove(value: string) {}
 
-    readDirRecursively(path: string): Array<string> {
+    readDirRecursively(path: string): string[] {
         const items = fs.readdirSync(path);
         const files = [];
         items.forEach((item) => {

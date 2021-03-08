@@ -36,7 +36,7 @@ interface NukeClientOptions {
     readyMessage?: string;
     errorLog?: string;
     owner?: string;
-    devIds?: Array<string>;
+    devIds?: string[];
 }
 
 export default class extends discord.Client {
