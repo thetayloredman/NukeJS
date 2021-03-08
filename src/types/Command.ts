@@ -1,6 +1,3 @@
-/* eslint-disable no-empty-function */
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
 /*
  * NukeJS - Discordjs Bot Framework
  *

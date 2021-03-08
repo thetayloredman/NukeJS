@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 /*
  * NukeJS - Discordjs Bot Framework
  *
@@ -54,7 +53,6 @@ export default class extends Loader {
         console.log(colors.getGray('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'));
     }
 
-    // eslint-disable-next-line no-unused-vars
     register(file: string, path: string, category?: string) {
         try {
             const inhibitor: Inhibitor = new (require(path))(file);

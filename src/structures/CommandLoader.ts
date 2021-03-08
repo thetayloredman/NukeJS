@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 /*
  * NukeJS - Discordjs Bot Framework
  *
@@ -165,7 +164,6 @@ export default class extends Loader {
     }
 
     async checkInihibitors(message, cmd) {
-        // eslint-disable-next-line no-unused-vars
         return new Promise((resolve, reject) => {
             this.client.InhibitorStore.forEach(async (inhibitor) => {
                 if (!this.ignoredInhibitors.includes(inhibitor.name)) {
@@ -204,7 +202,6 @@ export default class extends Loader {
         if (!cmd) return;
 
         // Inhibitor Check
-        // eslint-disable-next-line no-restricted-syntax
         for (const inhibitorKey of this.client.InhibitorStore.keyArray()) {
             if (!this.ignoredInhibitors.includes(inhibitorKey)) {
                 if ((await this.client.InhibitorStore.get(inhibitorKey).run(message, cmd, this.name)) === false) return;

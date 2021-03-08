@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /*
  * NukeJS - Discordjs Bot Framework
  *
@@ -23,7 +22,6 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-/* eslint-disable global-require */
 import { default as colors } from '../utils/NukeColors';
 import Event from '../types/Event';
 import NukeLogger from '../utils/NukeLogger';

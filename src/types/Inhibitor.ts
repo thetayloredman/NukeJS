@@ -1,7 +1,3 @@
-/* eslint-disable no-empty-function */
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
-
 import Command from './Command';
 /*
  * NukeJS - Discordjs Bot Framework

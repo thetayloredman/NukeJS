@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-classes-per-file */
 /*
  * NukeJS - Discordjs Bot Framework
  *
