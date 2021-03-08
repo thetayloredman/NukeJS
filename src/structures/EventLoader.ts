@@ -26,7 +26,7 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import { default as colors } from '../utils/NukeColors';
-import Event from '../types/event';
+import Event from '../types/Event';
 import NukeLogger from '../utils/NukeLogger';
 import Loader from './Loader';
 
